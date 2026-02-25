@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { InputEvent, useState } from "react";
 
 export default function Home() {
   const [newTaskTitle, setNewTaskTitle] = useState("");
@@ -13,7 +13,7 @@ export default function Home() {
     "buy tv",
   ]);
 
-  const onNewTaskChange = (e) => {
+  const onNewTaskChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewTaskTitle(e.target.value);
   };
 
