@@ -2,6 +2,11 @@
 
 import { useState } from "react";
 
+type Task = {
+  title: string;
+  description: string;
+};
+
 const tasks = [
   { title: "Tea", description: "have tea in morning" },
   { title: "Coffee", description: "or, have coffee in morning" },
@@ -56,7 +61,7 @@ export default function Home() {
   );
 }
 
-export function TaskList({ tasks }) {
+export function TaskList({ tasks }: { tasks: Task[] }) {
   return (
     <div className="bg-gray-800">
       Task List:
