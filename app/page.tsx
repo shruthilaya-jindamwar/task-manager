@@ -1,56 +1,75 @@
 "use client";
 
-import { InputEvent, useState } from "react";
+import { useState } from "react";
+
+const tasks = [
+  { title: "Tea", description: "have tea in morning" },
+  { title: "Coffee", description: "or, have coffee in morning" },
+  {
+    title: "Biscuit",
+    description: "and have Biscuits along with tea/coffee",
+  },
+];
 
 export default function Home() {
-  const [newTaskTitle, setNewTaskTitle] = useState("");
+  const [addNewTaskInProgress, setAddNewTaskInProgress] = useState(false);
 
-  const [arr, setArr] = useState([
-    "buy vegetables", //
-    "buy books",
-    "buy pens",
-    "buy pencils",
-    "buy tv",
-  ]);
-
-  const onNewTaskChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTaskTitle(e.target.value);
+  const addNewTask = () => {
+    setAddNewTaskInProgress(true);
   };
 
-  const onClickAdd = () => {
-    setArr([
-      ...arr,
-     newTaskTitle
-    ]);
-
-    setNewTaskTitle("")
+  const saveTask = () => {
+    setAddNewTaskInProgress(false);
   };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+      <main className="flex min-h-screen w-full max-w-3xl flex-col  py-2 px-10 bg-white dark:bg-black sm:items-start">
+        {addNewTaskInProgress === false && ( //
+          <>
+            <TaskList tasks={tasks} />
 
+            <button
+              onClick={addNewTask}
+              className="bg-gray-700 hover:bg-gray-600 cursor-pointer"
+            >
+              +
+            </button>
+          </>
+        )}
 
-        <div>
-          Task list
-          <ul>
-            {arr.map((item) => {
-              return <li key={item}># {item} </li>;
-            })}
-          </ul>
-        </div>
-
-        <div>
-          Enter a task title:
-          <input
-            onChange={onNewTaskChange}
-            className="border-2 border-amber-50"
-          ></input>
-          <button onClick={onClickAdd} className="border-2 border-amber-500">
-            Add
-          </button>
-        </div>
+        {addNewTaskInProgress === true && ( //
+          <>
+            Title: <input className="bg-white border-2 border-amber-800" />
+            Description:{" "}
+            <input className="bg-white border-2 border-amber-800" />
+            <button
+              onClick={saveTask}
+              className="bg-gray-700 hover:bg-gray-600 cursor-pointer"
+            >
+              Save
+            </button>
+          </>
+        )}
       </main>
+    </div>
+  );
+}
+
+export function TaskList({ tasks }) {
+  return (
+    <div className="bg-gray-800">
+      Task List:
+      <ul className="list-disc pl-4">
+        {tasks.map((item) => {
+          return (
+            <li key={item.title}>
+              <p>{item.title}</p>
+              <p> - {item.description}</p>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }
